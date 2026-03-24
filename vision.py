@@ -1,7 +1,7 @@
 import socket, time, sys
 from config import *
 
-def vision_connect():
+def connect():
     # Connect to vision system
     global v
     v = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,12 +19,12 @@ def vision_connect():
     return v
 
 
-def vs_send(cmd):
+def send(cmd):
     v.send(str.encode(cmd + '\n'))
     time.sleep(0.1)
 
 
-def vs_recv():
+def recv():
     v_data = b''
     while not v_data:
         v_data = v.recv(20)
