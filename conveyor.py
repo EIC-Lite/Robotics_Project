@@ -8,6 +8,16 @@
 #### stop conveyor       = jog_stop,conv,0
 #########################################################
 
+####### Command for control conveyor #################
+#### activate tcp        = activate,tcp
+#### power on servo      = pwr_on,conv,0
+#### power off servo     = pwr_off,conv,0
+#### set velocity x mm/s = set_vel,conv,x   # x = 0 to 200
+#### jog forward         = jog_fwd,conv,0
+#### jog backward        = jog_bwd,conv,0
+#### stop conveyor       = jog_stop,conv,0
+#########################################################
+
 import socket, time
 from config import *
 
@@ -18,9 +28,10 @@ def connect():
     c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     c.bind((ip_host, port_conv))
     c.listen(1)
-    print ("socket is listening")
+    print("socket is listening")
 
     conv, addr = c.accept()
+    c.close()  # Close server socket after accepting connection
     print(f"Connected by {addr}")
     conv.sendall(b'activate,tcp,0.0\n')
     time.sleep(1)
