@@ -12,7 +12,7 @@ import socket, time
 from config import *
 
 
-def conveyor_connect():
+def connect():
     # Connect to conveyor belt
     global conv
     c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,7 +28,7 @@ def conveyor_connect():
     return conv
 
 
-def conveyor_start():
+def start():
     # Start conveyor belt
     conv.sendall(b'pwr_on,conv,0\n')
     time.sleep(1)
@@ -37,8 +37,12 @@ def conveyor_start():
     conv.sendall(b'set_vel,conv,20\n')
     time.sleep(1)
 
+    # Jog forward
+    conv.sendall(b'jog_fwd,conv,0\n')
+    time.sleep(1)
 
-def conveyor_stop():
+
+def stop():
     # Stop conveyor belt
     conv.sendall(b'jog_stop,conv,0\n')
     time.sleep(1)
