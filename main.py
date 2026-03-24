@@ -1,37 +1,38 @@
 from config import *
-from robot import *
-from gripper import *
-from conveyor import *
-from vision import *
+import robot
+import gripper
+import conveyor
+import vision
+import socket, time
 
 
 def main():
     # Connect to robot, gripper, conveyor belt, and vision system
-    r = robot_connect()
-    g = gripper_connect()
-    conv = conveyor_connect()
-    vs = vision_connect()
+    r = robot.connect()
+    g = gripper.connect()
+    conv = conveyor.connect()
+    vs = vision.connect()
 
     # Start conveyor belt
-    conveyor_start()
+    conveyor.start()
 
     # Open the gripper
-    gripper_open()
+    gripper.open()
 
     # Move to Starting Position
     r.send(b'movel(p[0.116, -0.300, 0.200, 0, -3.143, 0], 1.2, 0.4, 0, 0)\n')
-    time.sleep(2)  # Wait for the robot to move
+    time.sleep(1)  # Wait for the robot to move
 
     # Move to the position above the conveyor belt
-    #
-    #
+    r.send(b'movel(p[0.095, -0.296, 0.478, 2.222, 2.222, 0], 1.2, 0.4, 0, 0)\n')
+    time.sleep(1)
 
     # Open the gripper
-    gripper_open()
+    gripper.open()
 
     # Trigger camera and get object offset (X, Y, Rz)
-    vs_send('cap!')
-    diffX, diffY, diffRz = vs_recv()
+    vs.send('cap!')
+    diffX, diffY, diffRz = vs.recv()
 
     # Move above the object
     # X, Y, RZ
@@ -42,7 +43,7 @@ def main():
     time.sleep(1)
 
     # Close the gripper
-    gripper_close()
+    gripper.close()
 
     # Lift up
     # +Z
@@ -57,10 +58,10 @@ def main():
     time.sleep(1)
 
     # Open the gripper
-    gripper_open()
+    gripper.open()
 
     # Stop conveyor belt
-    conveyor_stop()
+    conveyor.stop()
 
 
 if __name__ == "__main__":
