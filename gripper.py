@@ -2,7 +2,7 @@ import socket, time
 from config import *
 
 
-def gripper_connect():
+def connect():
     # Connect to gripper
     global g
     g = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,14 +26,14 @@ def gripper_connect():
     return g
 
 
-def gripper_open():
+def open():
     # Open the gripper
     g.send(b'SET POS 0\n')
     g.recv(255)
     time.sleep(1)
 
 
-def gripper_close():
+def close():
     # Close the gripper
     g.send(b'SET POS 200\n')
     g.recv(255)
