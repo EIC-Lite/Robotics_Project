@@ -2,7 +2,7 @@ import socket, time
 from config import *
 
 
-def robot_connect():
+def connect():
     # Connect to robot
     global r
     r = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
