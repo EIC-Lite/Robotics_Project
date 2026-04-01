@@ -20,7 +20,7 @@ def connect():
         time.sleep(3)
         g.send(b'SET GTO 1\n')
         g.send(b'SET SPE 255\n')
-        g.send(b'SET FOR 200\n')
+        g.send(b'SET FOR 0\n')
     print('Gripper ready')
 
     return g
@@ -39,3 +39,8 @@ def close():
     g.recv(255)
     time.sleep(1)
 
+if __name__ == "__main__":
+    # connect()
+    # send('cap!')       # trigger Vision Builder acquisition
+    # print(recv())
+    pass
