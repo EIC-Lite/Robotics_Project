@@ -35,12 +35,12 @@ def open():
 
 def close():
     # Close the gripper
-    g.send(b'SET POS 200\n')
+    g.send(b'SET POS 255\n')
     g.recv(255)
     time.sleep(1)
 
 if __name__ == "__main__":
-    # connect()
-    # send('cap!')       # trigger Vision Builder acquisition
-    # print(recv())
-    pass
+    g = connect()
+    open()
+    time.sleep(2)
+    close()
