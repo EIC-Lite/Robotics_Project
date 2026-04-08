@@ -9,12 +9,12 @@ import socket, time
 def main():
     # Connect to robot, gripper, conveyor belt, and vision system
     r = robot.connect()
-    g = gripper.connect()
-    # conv = conveyor.connect()
-    vs = vision.connect()
+    gripper.connect()
+    conveyor.connect()
+    vision.connect()
 
-    # # Start conveyor belt
-    # conveyor.start()
+    # Start conveyor belt
+    conveyor.start()
 
     # Open the gripper
     gripper.open()
@@ -36,9 +36,7 @@ def main():
 
     v_data = vision.recv()
     print(v_data)
-    x = v_data[0]
-    y = v_data[1]
-    rz = v_data[2]
+    x, y, rz = v_data[0], v_data[1], v_data[2]
 
     # Move to the position above the conveyor belt
     r.send(f'movel(p[{x}, {y}, 0.478, 2.222, 2.222, 0], 1.2, 0.4, 0, 0)\n'.encode('utf-8')) # Have to offset x and calibrate z
@@ -56,8 +54,8 @@ def main():
     time.sleep(1)
     vision.send('!PICKED')
 
-    # # Stop conveyor belt
-    # conveyor.stop()
+    # Stop conveyor belt
+    conveyor.stop()
 
 
 if __name__ == "__main__":
