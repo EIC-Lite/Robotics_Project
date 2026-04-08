@@ -23,8 +23,6 @@ def connect():
         g.send(b'SET FOR 0\n')
     print('Gripper ready')
 
-    return g
-
 
 def open():
     # Open the gripper
@@ -38,6 +36,7 @@ def close():
     g.send(b'SET POS 255\n')
     g.recv(255)
     time.sleep(1)
+
 
 if __name__ == "__main__":
     g = connect()
