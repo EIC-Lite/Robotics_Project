@@ -1,4 +1,4 @@
-import socket, time
+import socket, time, math
 from config import *
 
 
@@ -11,11 +11,24 @@ def connect():
 
     return r
 
-def rotate_rz(rz):
+  
+def rotate_rz(RZ):
     # Rotate robot around Z-axis
-    r.send(b'movej(), 1.2, 0.4, 0, 0)\n')
+    rz = math.radians(RZ)
+    cmd = (
+        f'movej(['
+        f'get_actual_joint_positions()[0], '
+        f'get_actual_joint_positions()[1], '
+        f'get_actual_joint_positions()[2], '
+        f'get_actual_joint_positions()[3], '
+        f'get_actual_joint_positions()[4], '
+        f'get_actual_joint_positions()[5] + {rz:.6f}'
+        f'], 1.2, 0.4, 0, 0)\n'
+    )    
+    r.send(cmd.encode())    
     time.sleep(1)
 
+    
 if __name__ == "__main__":
     r = connect()
     r.send(b'movel(p[0.116, -0.300, 0.200, 0, -3.143, 0], 1.2, 0.4, 0, 0)\n')
