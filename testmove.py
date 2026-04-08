@@ -1,14 +1,12 @@
 from config import *
 import robot
 import time
-import vision
 import gripper
 import math
 
 def main():
     r = robot.connect()
     g = gripper.connect()
-    vs = vision.connect()
 
     # Open the gripper
     gripper.open()

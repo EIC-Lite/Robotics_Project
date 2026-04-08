@@ -17,9 +17,13 @@ def connect():
         print(f'Socket error: {e}')
         sys.exit(1)
 
+    return v
+
 
 def send(cmd):
-    v.send(str.encode(cmd + '\n'))
+    global v
+    print(f'Sending to vision: {cmd}')
+    v.send(str.encode(cmd + '\r\n'))
     time.sleep(0.1)
 
 

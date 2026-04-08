@@ -8,7 +8,7 @@
 #### stop conveyor       = jog_stop,conv,0
 #########################################################
 
-import socket, time
+import socket, time, msvcrt
 from config import *
 
 
@@ -45,3 +45,16 @@ def stop():
     # Stop conveyor belt
     conv.sendall(b'jog_stop,conv,0\n')
     time.sleep(1)
+
+def main():
+    connect()
+    start()
+    print("Conveyor running. Press 'q' to stop.")
+    while True:
+        if msvcrt.kbhit() and msvcrt.getch().lower() == b'q':
+            break
+        time.sleep(0.05)
+    stop()
+
+if __name__ == "__main__":
+    main()

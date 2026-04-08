@@ -17,25 +17,27 @@ def connect():
     if g_recv:
         g.send(b'SET ACT 1\n')
         g_recv = str(g.recv(255), 'UTF-8')
-        time.sleep(3)
+        time.sleep(1)
         g.send(b'SET GTO 1\n')
         g.send(b'SET SPE 255\n')
-        g.send(b'SET FOR 0\n')
+        g.send(b'SET FOR 20\n')
     print('Gripper ready')
 
 
 def open():
     # Open the gripper
+    g.send(b'SET SPE 255\n')
     g.send(b'SET POS 0\n')
     g.recv(255)
-    time.sleep(1)
+    time.sleep(0.8)
 
 
 def close():
     # Close the gripper
+    g.send(b'SET SPE 255\n')
     g.send(b'SET POS 255\n')
     g.recv(255)
-    time.sleep(1)
+    time.sleep(0.8)
 
 
 if __name__ == "__main__":
