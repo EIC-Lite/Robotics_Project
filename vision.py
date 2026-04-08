@@ -5,7 +5,7 @@ def connect():
     # Connect to vision system
     global v
     v = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    v.settimeout(10)
+    # v.settimeout(10)
     try:
         v.connect((ip_vs, port_vs))
         print('Connected to vision system')
@@ -33,3 +33,8 @@ def recv():
     x, y, rz = decoded.split(',')
     print(f'Vision recv: x={x}, y={y}, rz={rz}')
     return float(x), float(y), float(rz)   # returns (X, Y, Rz) in pixels/mm from camera
+
+if __name__ == "__main__":
+    connect()
+    send('cap!')
+    print(recv())
