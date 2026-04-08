@@ -1,6 +1,7 @@
 import socket, time, sys
 from config import *
 
+
 def connect():
     # Connect to vision system
     global v
@@ -15,8 +16,6 @@ def connect():
     except socket.error as e:
         print(f'Socket error: {e}')
         sys.exit(1)
-
-    return v
 
 
 def send(cmd):
@@ -33,6 +32,7 @@ def recv():
     x, y, rz = decoded.split(',')
     print(f'Vision recv: x={x}, y={y}, rz={rz}')
     return float(x), float(y), float(rz)   # returns (X, Y, Rz) in pixels/mm from camera
+
 
 if __name__ == "__main__":
     connect()
