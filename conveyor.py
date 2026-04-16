@@ -34,12 +34,11 @@ def start():
 
     # Set conveyor speed (20 mm/s)
     conv.sendall(b'set_vel,conv,20\n')
-    time.sleep(1)
+    time.sleep(2)
 
     # Jog forward
     conv.sendall(b'jog_fwd,conv,0\n')
     time.sleep(1)
-
 
 def stop():
     # Stop conveyor belt

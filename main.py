@@ -1,5 +1,5 @@
 from config import *
-import robot
+import robotv2
 import gripper
 import conveyor
 import vision
@@ -8,7 +8,7 @@ import socket, time
 
 def main():
     # Connect to robot, gripper, conveyor belt, and vision system
-    r = robot.connect()
+    r = robotv2.connect()
     gripper.connect()
     conveyor.connect()
     vision.connect()
@@ -30,7 +30,7 @@ def main():
     v_data = b''
     while v_data.decode('utf-8').strip() != '!FOUND!':
         v_data = vision.v.recv(20)
-        time.sleep(0.1)
+        # time.sleep(0.1)
         print(f'Vision recv: {v_data.decode("utf-8").strip()}')
         if v_data == '!FOUND!':
             break
@@ -42,20 +42,24 @@ def main():
 
     # Move to the position above the conveyor belt
     print(f'Moving to position above object at x={x}, y={y}...')
-    r.send(f'movej(p[{x/1000}, {y/1000}, 0.300, 2.222, 2.222, 0], 2.0, 1.4, 0, 0)\n'.encode('utf-8')) # Have to offset x and calibrate z
-    time.sleep(2)
+    # r.send(f'movej(p[{x/1000}, {y/1000}, 0.300, 2.222, 2.222, 0], 2.0, 1.4, 0, 0)\n'.encode('utf-8'))
+    # robotv2.movej([x/1000, y/1000, 0.300, 2.222, 2.222, 0], speed=2.5, acc=2.5, blend=0, tool_rotation_deg=-rz)
+    # time.sleep(1)
 
     # Move down to pick
     print('Moving down to pick...')
-    r.send(f'movel(p[{(x/1000)-0.03}, {y/1000}, 0.15, 2.222, 2.222, 0], 1.2, 0.4, 0, 0)\n'.encode('utf-8'))
-    time.sleep(1)
+    # r.send(f'movel(p[{(x/1000)-0.03}, {y/1000}, 0.15, 2.222, 2.222, 0], 1.2, 0.4, 0, 0)\n'.encode('utf-8'))
+    robotv2.movej([(x/1000)-0.01, y/1000, 0.15, 2.222, 2.222, 0], speed=3, acc=3, blend=0, tool_rotation_deg=-rz)
+    time.sleep(1.2)
 
     # Close the gripper
     gripper.close()
 
     # Lift up
     print('Lifting up...')
-    r.send(f'movel(p[0.093, -0.333, 0.344, 2.222, 2.222, 0], 2.0, 1.4, 2, 0)\n'.encode('utf-8'))
+    # r.send(f'movel(p[0.093, -0.333, 0.344, 2.222, 2.222, 0], 2.0, 1.4, 2, 0)\n'.encode('utf-8'))
+    robotv2.movel([0.093, -0.333, 0.344, 2.222, 2.222, 0], speed=2.5, acc=2.5)
+
     time.sleep(1)
     vision.send('!PICKED')
 

@@ -28,8 +28,15 @@ def rotate_rz(RZ):
     r.send(cmd.encode())    
     time.sleep(1)
 
+def movej(pose, speed=1.2, acc=0.4, blend=0, wait=0):
+    cmd = f'movej(p[{pose[0]:.3f}, {pose[1]:.3f}, {pose[2]:.3f}, {pose[3]:.3f}, {pose[4]:.3f}, {pose[5]:.3f}], {speed}, {acc}, {blend}, {wait})\n'
+    r.send(cmd.encode())
+    time.sleep(1)
+
     
 if __name__ == "__main__":
     r = connect()
-    r.send(b'movel(p[0.116, -0.300, 0.200, 0, -3.143, 0], 1.2, 0.4, 0, 0)\n')
+    movej([0.116, -0.300, 0.200, 0, -3.143, 0], speed=1.2, acc=0.4, blend=0, wait=0)
+    time.sleep(1)
+    rotate_rz(90)
     time.sleep(1)
