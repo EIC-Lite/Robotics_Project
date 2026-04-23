@@ -25,7 +25,6 @@ def main():
     v_data = b''
     while v_data.decode('utf-8').strip() != '!FOUND!':
         v_data = vision.v.recv(20)
-        # time.sleep(0.1)
         print(f'Vision recv: {v_data.decode("utf-8").strip()}')
         if v_data == '!FOUND!':
             break
@@ -33,12 +32,12 @@ def main():
 
     v_data = vision.recv()
     print(v_data)
+    
     # Extract x (mm), y (mm), rz (degrees) from vision system
     x, y, rz = v_data[0], v_data[1], v_data[2]
 
     # Move down to pick
     print('Moving down to pick...')
-    # r.send(f'movel(p[{(x/1000)-0.03}, {y/1000}, 0.15, 2.222, 2.222, 0], 1.2, 0.4, 0, 0)\n'.encode('utf-8'))
     robot.movej([(x/1000)-0.01, y/1000, 0.15, 2.222, 2.222, 0], speed=3, acc=3, blend=0, tool_rotation_deg=-rz)
     time.sleep(1.2)
 
