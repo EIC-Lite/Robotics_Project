@@ -6,5 +6,5 @@ ip_host    = '10.10.0.98'   # This computer's IP address (for vision system call
 # --- Port config ---
 port_rtde  = 30003          # UR robot URScript port
 port_g     = 63352          # Robotiq gripper port
-port_vs    = 5000           # Vision system port
+port_vs    = 2023           # Vision system port
 port_conv  = 2002           # Conveyor belt port
