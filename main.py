@@ -32,7 +32,7 @@ def main():
 
     v_data = vision.recv()
     print(v_data)
-    
+
     # Extract x (mm), y (mm), rz (degrees) from vision system
     x, y, rz = v_data[0], v_data[1], v_data[2]
 
@@ -46,7 +46,6 @@ def main():
 
     # Lift up
     print('Lifting up...')
-    # r.send(f'movel(p[0.093, -0.333, 0.344, 2.222, 2.222, 0], 2.0, 1.4, 2, 0)\n'.encode('utf-8'))
     robot.movel([0.093, -0.333, 0.344, 2.222, 2.222, 0], speed=2.5, acc=2.5)
 
     time.sleep(1)
